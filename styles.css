@@ -1,0 +1,23 @@
+
+
+p:not(#test) {
+    background: lightcoral;
+    color: white;
+  }
+
+h1 {
+    color:aquamarine;
+}
+
+#t1 {
+    border-right: 3px black;
+    background-color: cornflowerblue;
+}
+
+img{
+  padding: 100px;
+}
+
+#test {
+  display: block;
+}

@@ -1,0 +1,128 @@
+
+body{
+    background: #FFD6D6;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+#logo{
+    width: 180px;
+}
+
+#home, #highscores, #wallet{
+    background-color: #2B3142;
+    border-radius: 8px;
+    color:#FF8884;
+}
+
+nav{
+    width: 100%;
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.navi{
+    position: relative;
+    cursor: pointer;
+    color: #2B3142;
+    font-size: 18px;
+    padding: 0.5rem 1rem;
+    transition: color 0.45s;
+}
+
+.navi::after{
+    position: absolute;
+    content: "";
+    inset: 0;
+    background: #FF8884;
+    scale: 1 0;
+    z-index: -1;
+    transition: 0.40s;
+    border-radius: 8px;
+}
+
+.navi:hover{
+    color: black;
+}
+
+.navi:hover:after{
+    scale: 1 1;
+}
+
+div{
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    left:auto;
+    right: auto;
+}
+
+button{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: #FF6965;
+    cursor: pointer;
+    background-color: #2B3142;
+    padding: 0.25rem 0.5rem;
+    transition: all 0.4s;
+}
+
+button:hover{
+    background-color: #FF8884;
+    color:#2B3142;
+    border-color: #FF6965;
+}
+
+.centered-div p{
+    margin: 0 auto;
+    margin-top: 0.3rem;
+}
+
+#nervig{
+    margin-top: 2rem;
+}
+
+.score{
+    color: #2B3142;
+    background-color: white;
+    font-size: 17px;
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    width: 400px;
+}
+
+/*shrink grow*/
+@keyframes shgr {
+    0%, 50%, 100%{
+        transform: scale(1);
+    }
+
+    30%{
+        transform: scale(0.95);
+    }
+
+    70%{
+        transform: scale(1.05);
+    }
+}
+
+.shgr{
+    animation: shgr 4s linear infinite;
+    text-align: center;
+}
+
+#slotmachine{
+    position: absolute;
+    width: 100%;
+    align-content: center;
+    width: 550px;
+    z-index: 0;
+}
+
+.slot{
+    display: inline;
+    position: absolute;
+    width: 100px;
+    z-index: -2;
+}

@@ -7,4 +7,4 @@ Als mein Projekt möchte ich im Verlauf des Semesters eine Art 'Slot Machine' pr
 Anschließend klickt man auf 'Spin' um zu starten. Es werden dann 4 zufällige Bilder in der Slot Machine angezeit und das Programm berechnet den Gewinn. Bei einem Gewinn wird eine Nachricht angezeit mit dem berechneten Gewinn und bei einem neuen Highscore gibt es eine Pop-up Benachichtigung. 
 Highscores sind, Anzahl an Spielen und höchste Gewinnauszahlung(Jackpot?).
 
-Erste Skizze siehe ErstesSketch.png
+[Sketch]:C:\Users\Alina\Documents\GitHub\ju1-gis\ju1-gis\ErstesSketch.png

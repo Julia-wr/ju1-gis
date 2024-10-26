@@ -2,10 +2,11 @@
 body{
     background: #FFD6D6;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    width: 100%;
 }
 
 #logo{
-    width: 180px;
+    width: 130px;
 }
 
 #home, #highscores, #wallet{
@@ -17,7 +18,7 @@ body{
 nav{
     width: 100%;
     display: flex;
-    gap: 30px;
+    gap: 1.5rem;
     align-items: center;
     justify-content: center;
 }
@@ -63,7 +64,7 @@ div{
 }
 
 button{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 'Franklin Gothic Medium';
     color: #FF6965;
     cursor: pointer;
     background-color: #2B3142;
@@ -89,7 +90,8 @@ button:hover{
     font-size: 17px;
     padding: 0.7rem 1rem;
     border-radius: 8px;
-    width: 400px;
+    width: 75%;
+    max-width: 500px;
 }
 
 /*shrink grow*/
@@ -113,10 +115,9 @@ button:hover{
 }
 
 #slotmachine{
-    position: absolute;
-    width: 100%;
     align-content: center;
-    width: 550px;
+    width: 40%;
+    min-width: 400px;
     z-index: 0;
 }
 
@@ -124,5 +125,10 @@ button:hover{
     display: inline;
     position: absolute;
     width: 100px;
-    z-index: -2;
+    z-index: -1;
+}
+
+.test{
+    display: flex;
+    
 }

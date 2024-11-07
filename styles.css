@@ -119,3 +119,8 @@ button:hover{
     min-width: 400px;
     z-index: 1;
 }
+
+#slotImage1, #slotImage2, #slotImage3 {
+    width: 100px;
+
+}

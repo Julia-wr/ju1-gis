@@ -2,17 +2,36 @@ const keineGleich = 0;
 const zweiGleich = 1.5;
 const dreiGleich = 100;
 
-let money = 0;
-
-
-//Changes display of current money value
+//Changes current money value and saves name
 let currentDisplayMoney = document.getElementById('currentDisplayMoney');
+window.onload = function(){
+    currentDisplayMoney.textContent = "You currently have " + sessionStorage.getItem('money') + "€";
+}
 
 let buttonCharge = document.getElementById('chargeB');
 buttonCharge?.addEventListener('click', chargeB, false);
 function chargeB(event){
-    money += document.getElementById('money').value;
-    currentDisplayMoney.textContent = "You now have "+ money + "€";
+    checkBoxes() ? null : userAlertWrongInput();
+    //saves name
+    var nameBefore = sessionStorage.getItem('name');
+    sessionStorage.setItem('name', document.getElementById('name').value);
+    //set money variable
+    if(nameBefore != sessionStorage.getItem('name')){
+        sessionStorage.setItem('money', 0);
+    }
+    sessionStorage.setItem('money', +document.getElementById('money').value + +sessionStorage.getItem('money'));
+    currentDisplayMoney.textContent = "You now have "+ sessionStorage.getItem('money') + "€";
+}
+
+let wrongInputDisplay = document.getElementById('wrongInputDisplay');
+function checkBoxes(){
+    if(document.getElementById('name').value == ""
+    || document.getElementById('money').value == ""){
+        wrongInputDisplay.textContent = "Please enter both Name and amout to be charged!";  
+        return false;
+    }
+    return true;
+        
 }
 
 //Button for 1€ bet starts Spin
@@ -46,21 +65,24 @@ function doSpin(bet) {
 
 }
 
-//Check if Player won and adds win to players wallet
+//Check if Player won and adds win to players wallet or deducts lost bet
 function checkWin(x, y, z, bet) {
     if(x == y && y == z) {
-        document.getElementsByName('money')[0].value = money + dreiGleich * bet;
+        sessionStorage.setItem('money', +sessionStorage.getItem('money') + +bet * +dreiGleich);
         alert('Congratulations you got the jackpot!! You win ' + dreiGleich * bet + '€');
     }
     if(x == y || y == z || x == z){
-        
+        sessionStorage.setItem('money', +sessionStorage.getItem('money') + +bet * +zweiGleich);
         alert('Congratulations! You win ' + zweiGleich * bet + '€');
+    }
+    else{
+        sessionStorage.setItem('money', +sessionStorage.getItem('money') - +bet)
     }
 }
 
 //Check if Player hat enough money to spin with entered bet
 function checkBet(bet){
-    if(10 < bet){
+    if(sessionStorage.getItem('money') < bet){
         alert('You dont have enough money! Add some to your wallet to continue playing');
         return false;
     }

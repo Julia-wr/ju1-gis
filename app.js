@@ -2,14 +2,55 @@ const keineGleich = 0;
 const zweiGleich = 1.5;
 const dreiGleich = 10;
 
-
+let highscoreList = [
+    {
+        name: "Mia",
+        amount: 666
+    }
+    , {
+        name: "Jeff",
+        amount: 600
+    }, {
+        name: "Agust",
+        amount: 553
+    }, {
+        name: "Kuina",
+        amount: 545
+    }, {
+        name: "Patrick",
+        amount: 534
+    }, {
+        name: "Mina",
+        amount: 506
+    }, {
+        name: "Agust",
+        amount: 467
+    }, {
+        name: "Giga",
+        amount: 455
+    }, {
+        name: "Oblek",
+        amount: 444
+    }, {
+        name: "Mina",
+        amount: 432
+    }
+]
 
 //Changes current money value and saves name
 let currentDisplayMoney = document.getElementById('currentDisplayMoney');
 if(sessionStorage.getItem('money') != null){
     window.onload = function(){
-        currentDisplayMoney.textContent = "You currently have " + sessionStorage.getItem('money') + "€";
+        currentDisplayMoney.textContent = "You currently have " 
+        + sessionStorage.getItem('money') + "€";
     }
+}
+
+//print current the highscores
+window.onload = function() {
+    for(let k = 1; k <= 10; k++)
+        document.getElementById(k).textContent = highscoreList[k - 1].name + " - - - - - - - - - - - - - - - - - - - - - - - - - - " 
+        + highscoreList[k - 1].amount + "€";
 }
 
 let buttonCharge = document.getElementById('chargeB');
@@ -32,7 +73,7 @@ let wrongInputDisplay = document.getElementById('wrongInputDisplay');
 function checkBoxes(){
     if(document.getElementById('name').value == ""
     || document.getElementById('money').value == ""){
-        wrongInputDisplay.textContent = "Please enter both Name and amout to be charged!";  
+        wrongInputDisplay.textContent = "Please enter both name and amout to be charged!";  
         return false;
     }
     return true;
@@ -99,7 +140,22 @@ function checkBet(bet){
     return true;
 }
 
-function checkHighscore(){
+//checks if a new highscore was set
+function checkHighscore(win){
     //TODO
+    for(let i = 0; i <= highscoreList.length; i++){
+        if(win > highscoreList[i]){
+            newHighscroe(win, i);
+        }
+    }
+}
+
+//how tf can i save multiple highscores in browser??????
+//set new highscore !unfinished!
+function newHighscroe(highscore, position){
+    var newHighscore = {name: sessionStorage.getItem('name'), amount: highscore}
+
+    highscoreList.splice(position, 1, newHighscore);
+    //highscoreList.sort(function(a,b) {return (a.amount - b.amount)});
 }
 

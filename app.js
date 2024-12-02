@@ -2,6 +2,12 @@ const keineGleich = 0;
 const zweiGleich = 1.5;
 const dreiGleich = 10;
 
+let win;
+
+let highscores = {
+    //alle highscores in ein objekt und das in session storage speichern
+};
+
 let highscoreList = [
     {
         name: "Mia",
@@ -35,24 +41,9 @@ let highscoreList = [
         name: "Mina",
         amount: 432
     }
-]
+];
 
 //Changes current money value and saves name
-let currentDisplayMoney = document.getElementById('currentDisplayMoney');
-if(sessionStorage.getItem('money') != null){
-    window.onload = function(){
-        currentDisplayMoney.textContent = "You currently have " 
-        + sessionStorage.getItem('money') + "€";
-    }
-}
-
-//print current the highscores
-window.onload = function() {
-    for(let k = 1; k <= 10; k++)
-        document.getElementById(k).textContent = highscoreList[k - 1].name + " - - - - - - - - - - - - - - - - - - - - - - - - - - " 
-        + highscoreList[k - 1].amount + "€";
-}
-
 let buttonCharge = document.getElementById('chargeB');
 buttonCharge?.addEventListener('click', chargeB, false);
 function chargeB(event){
@@ -109,10 +100,10 @@ function doSpin(bet) {
     checkWin(image1, image2, image3, bet);
 
 }
-let winLoseDisplay = document.getElementById('winLoseDisplay');
+
 //Check if Player won and adds win to players wallet or deducts lost bet
+let winLoseDisplay = document.getElementById('winLoseDisplay');
 function checkWin(x, y, z, bet) {
-    let win;
     if(x == y && y == z) {
         win = +bet * +dreiGleich;
         sessionStorage.setItem('money', +sessionStorage.getItem('money') + +win);
@@ -126,36 +117,56 @@ function checkWin(x, y, z, bet) {
         checkHighscore(win);
     }
     else{
-        sessionStorage.setItem('money', +sessionStorage.getItem('money') - +bet)
+        sessionStorage.setItem('money', +sessionStorage.getItem('money') - +bet);
         winLoseDisplay.textContent = "Unfortunately you lost...";
     }
 }
 
 //Check if Player hat enough money to spin with entered bet
 function checkBet(bet){
+    console.log(bet);
     if(sessionStorage.getItem('money') < bet){
-        winLoseDisplay.textContent = "You don't have enough money, please charge some money to continue playing."
+        winLoseDisplay.textContent = "You don't have enough money, please charge some money to continue playing.";
         return false;
     }
-    return true;
+    else{
+        return true;
+    }
 }
 
 //checks if a new highscore was set
 function checkHighscore(win){
     //TODO
     for(let i = 0; i <= highscoreList.length; i++){
-        if(win > highscoreList[i]){
+        if(win > highscoreList[i].amount){
             newHighscroe(win, i);
+            i = highscoreList.length;
         }
     }
 }
 
-//how tf can i save multiple highscores in browser??????
 //set new highscore !unfinished!
 function newHighscroe(highscore, position){
-    var newHighscore = {name: sessionStorage.getItem('name'), amount: highscore}
+    alert('Congratulations, you set a new highscore! You are now on Place ' + ++position + '!');
+    var newHighscore = {name: sessionStorage.getItem('name'), amount: highscore};
 
     highscoreList.splice(position, 1, newHighscore);
     //highscoreList.sort(function(a,b) {return (a.amount - b.amount)});
+}
+
+
+//print current the highscores and money display
+let currentDisplayMoney = document.getElementById('currentDisplayMoney');
+window.onload = function() {
+    if(document.getElementById(1) != undefined){
+        for(k = 1; k <= 10; k++){
+            document.getElementById(k).textContent = highscoreList[k - 1].name + " - - - - - - - - - - - - - - - - - - - - - - - - - - " 
+            + highscoreList[k - 1].amount + "€";
+        }
+    }
+    if(currentDisplayMoney != undefined && sessionStorage.getItem('money') != null && sessionStorage.getItem('name') != null){
+        currentDisplayMoney.textContent = sessionStorage.getItem('name') + 
+        ", you currently have " + sessionStorage.getItem('money') + "€";
+    }   
 }
 

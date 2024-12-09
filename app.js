@@ -125,7 +125,7 @@ function checkWin(x, y, z, bet) {
 //Check if Player hat enough money to spin with entered bet
 function checkBet(bet){
     console.log(bet);
-    if(sessionStorage.getItem('money') < bet){
+    if(parseInt(sessionStorage.getItem('money')) < parseInt(bet)){
         winLoseDisplay.textContent = "You don't have enough money, please charge some money to continue playing.";
         return false;
     }

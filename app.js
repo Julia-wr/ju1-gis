@@ -4,45 +4,6 @@ const dreiGleich = 10;
 
 let win;
 
-let highscores = {
-    //alle highscores in ein objekt und das in session storage speichern
-};
-
-let highscoreList = [
-    {
-        name: "Mia",
-        amount: 666
-    }
-    , {
-        name: "Jeff",
-        amount: 600
-    }, {
-        name: "Agust",
-        amount: 553
-    }, {
-        name: "Kuina",
-        amount: 545
-    }, {
-        name: "Patrick",
-        amount: 534
-    }, {
-        name: "Mina",
-        amount: 506
-    }, {
-        name: "Agust",
-        amount: 467
-    }, {
-        name: "Giga",
-        amount: 455
-    }, {
-        name: "Oblek",
-        amount: 444
-    }, {
-        name: "Mina",
-        amount: 432
-    }
-];
-
 //Changes current money value and saves name
 let buttonCharge = document.getElementById('chargeB');
 buttonCharge?.addEventListener('click', chargeB, false);
@@ -124,7 +85,6 @@ function checkWin(x, y, z, bet) {
 
 //Check if Player hat enough money to spin with entered bet
 function checkBet(bet){
-    console.log(bet);
     if(parseInt(sessionStorage.getItem('money')) < parseInt(bet)){
         winLoseDisplay.textContent = "You don't have enough money, please charge some money to continue playing.";
         return false;
@@ -135,38 +95,55 @@ function checkBet(bet){
 }
 
 //checks if a new highscore was set
-function checkHighscore(win){
-    //TODO
-    for(let i = 0; i <= highscoreList.length; i++){
-        if(win > highscoreList[i].amount){
+async function checkHighscore(win){
+    let highscoreList = await getHighscores();
+    console.log(highscoreList);
+    for(let i = 0; i <= highscoreList.length - 1; i++){
+        if(win >= highscoreList[i].amount){
             newHighscroe(win, i);
             i = highscoreList.length;
         }
     }
+    if(highscoreList.length < 10){
+        newHighscroe(win, highscoreList.length + 1);
+    }
 }
 
 //set new highscore !unfinished!
-function newHighscroe(highscore, position){
+async function newHighscroe(highscore, position){
     alert('Congratulations, you set a new highscore! You are now on Place ' + ++position + '!');
     var newHighscore = {name: sessionStorage.getItem('name'), amount: highscore};
-
-    highscoreList.splice(position, 1, newHighscore);
-    //highscoreList.sort(function(a,b) {return (a.amount - b.amount)});
+    await addHighscore(newHighscore);
 }
-
 
 //print current the highscores and money display
 let currentDisplayMoney = document.getElementById('currentDisplayMoney');
-window.onload = function() {
+window.onload = async function() {
+    let highscoreList = await getHighscores();
     if(document.getElementById(1) != undefined){
-        for(k = 1; k <= 10; k++){
-            document.getElementById(k).textContent = highscoreList[k - 1].name + " - - - - - - - - - - - - - - - - - - - - - - - - - - " 
-            + highscoreList[k - 1].amount + "€";
+        console.log(highscoreList);
+        for(k = 0; k <= highscoreList.length - 1; k++){
+            document.getElementById(k + 1).textContent = highscoreList[k].name + " - - - - - - - - - - - - - - - - - - - - - - - - - - " 
+            + highscoreList[k].amount + "€";
+            }
         }
-    }
     if(currentDisplayMoney != undefined && sessionStorage.getItem('money') != null && sessionStorage.getItem('name') != null){
         currentDisplayMoney.textContent = sessionStorage.getItem('name') + 
         ", you currently have " + sessionStorage.getItem('money') + "€";
     }   
 }
 
+async function addHighscore(newHighscore) {
+    let jsonString = JSON.stringify(newHighscore);
+    const response = await fetch('http://localhost:3000/highscore', {
+        method: 'POST',
+        body: jsonString,
+      });
+}
+
+async function getHighscores(){
+    const response = await fetch('http://localhost:3000/highscore');
+    const data = await response.json();
+    data.sort(function(a, b) {return b.amount - a.amount});
+    return data;
+  }

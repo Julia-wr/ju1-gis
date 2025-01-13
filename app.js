@@ -97,15 +97,16 @@ function checkBet(bet){
 //checks if a new highscore was set
 async function checkHighscore(win){
     let highscoreList = await getHighscores();
-    console.log(highscoreList);
-    for(let i = 0; i <= highscoreList.length - 1; i++){
-        if(win >= highscoreList[i].amount){
-            newHighscroe(win, i);
-            i = highscoreList.length;
-        }
-    }
     if(highscoreList.length < 10){
-        newHighscroe(win, highscoreList.length + 1);
+        newHighscroe(win, highscoreList.length);
+    }
+    else{
+        for(let i = 0; i <= highscoreList.length - 1; i++){
+            if(win >= highscoreList[i].amount){
+                newHighscroe(win, i);
+                i = highscoreList.length + 1;
+            }
+        }
     }
 }
 
@@ -146,4 +147,9 @@ async function getHighscores(){
     const data = await response.json();
     data.sort(function(a, b) {return b.amount - a.amount});
     return data;
-  }
+}
+
+reset?.addEventListener('click', resetHighscores, false);
+async function resetHighscores(){
+    const response = await fetch('http://localhost:3000/clearAll', {});
+}
